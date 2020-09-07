@@ -26,6 +26,10 @@ const Ingredients = () => {
       });
   }, []);
 
+  const filteredIngredientHandler = filteredIngredients => {
+    setUserIngredients(filteredIngredients);
+  }
+
   const addIngredientHandler = (ingredient) => {
     fetch(
       "https://react-hooks-test-project-998b3.firebaseio.com/ingredients.json",
@@ -57,7 +61,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientHandler} />
         <IngredientList
           ingredients={userIngredients}
           onRemoveItem={removeIngredientHandler}
