@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 import IngredientForm from "./IngredientForm";
 import Search from "./Search";
@@ -8,7 +8,7 @@ import IngredientList from "./IngredientList";
 const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([]);
 
-  const filteredIngredientHandler = useCallback(filteredIngredients => {
+  const filteredIngredientHandler = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients);
   }, []);
 
@@ -33,9 +33,16 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (ingredientId) => {
-    setUserIngredients((prevIngredients) =>
-      prevIngredients.filter((item) => item.id !== ingredientId)
-    );
+    fetch(
+      `https://react-hooks-test-project-998b3.firebaseio.com/ingredients/${ingredientId}.json`,
+      {
+        method: "DELETE",
+      }
+    ).then((response) => {
+      setUserIngredients((prevIngredients) =>
+        prevIngredients.filter((item) => item.id !== ingredientId)
+      );
+    });
   };
 
   return (
